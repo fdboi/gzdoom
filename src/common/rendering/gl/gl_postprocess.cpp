@@ -109,30 +109,31 @@ void FGLRenderer::ClearTonemapPalette()
 
 void FGLRenderer::Flush()
 {
-	auto vrmode = VRMode::GetVRMode(true);
-	if (vrmode->mEyeCount == 1)
-	{
-		CopyToBackbuffer(nullptr, true);
-	}
-	else
-	{
-		// Render 2D to eye textures
-		int eyeCount = vrmode->mEyeCount;
-		for (int eye_ix = 0; eye_ix < eyeCount; ++eye_ix)
-		{
-			screen->Draw2D();
-			if (eyeCount - eye_ix > 1)
-				mBuffers->NextEye(eyeCount);
-		}
-		twod->Clear();
+	CopyToBackbuffer(nullptr, true);
+	// auto vrmode = VRMode::GetVRMode(true);
+	// if (vrmode->mEyeCount == 1)
+	// {
+	// 	CopyToBackbuffer(nullptr, true);
+	// }
+	// else
+	// {
+	// 	// Render 2D to eye textures
+	// 	int eyeCount = vrmode->mEyeCount;
+	// 	for (int eye_ix = 0; eye_ix < eyeCount; ++eye_ix)
+	// 	{
+	// 		screen->Draw2D();
+	// 		if (eyeCount - eye_ix > 1)
+	// 			mBuffers->NextEye(eyeCount);
+	// 	}
+	// 	twod->Clear();
 
-		FGLPostProcessState savedState;
-		FGLDebug::PushGroup("PresentEyes");
-		// Note: This here is the ONLY place in the entire engine where the OpenGL dependent parts of the Stereo3D code need to be dealt with.
-		// There's absolutely no need to create a overly complex class hierarchy for just this.
-		PresentStereo();
-		FGLDebug::PopGroup();
-	}
+	// 	FGLPostProcessState savedState;
+	// 	FGLDebug::PushGroup("PresentEyes");
+	// 	// Note: This here is the ONLY place in the entire engine where the OpenGL dependent parts of the Stereo3D code need to be dealt with.
+	// 	// There's absolutely no need to create a overly complex class hierarchy for just this.
+	// 	PresentStereo();
+	// 	FGLDebug::PopGroup();
+	// }
 }
 
 //-----------------------------------------------------------------------------

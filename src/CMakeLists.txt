@@ -1129,7 +1129,7 @@ set (PCH_SOURCES
 	common/rendering/hwrenderer/postprocessing/hw_postprocess_cvars.cpp
 	common/rendering/gl_load/gl_interface.cpp
 	common/rendering/gl/gl_renderer.cpp
-	common/rendering/gl/gl_stereo3d.cpp
+	# common/rendering/gl/gl_stereo3d.cpp
 	common/rendering/gl/gl_framebuffer.cpp
 	common/rendering/gl/gl_renderstate.cpp
 	common/rendering/gl/gl_renderbuffers.cpp

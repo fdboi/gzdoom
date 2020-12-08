@@ -110,35 +110,37 @@ void gl_LoadExtensions()
 	InitContext();
 	CollectExtensions();
 
-	const char *glversion = (const char*)glGetString(GL_VERSION);
+	// const char *glversion = (const char*)glGetString(GL_VERSION);
 
-	const char *version = Args->CheckValue("-glversion");
-	realglversion = strtod(glversion, NULL);
+	// const char *version = Args->CheckValue("-glversion");
+	// realglversion = strtod(glversion, NULL);
 
 
-	if (version == NULL)
-	{
-		version = glversion;
-	}
-	else
-	{
-		double v1 = strtod(version, NULL);
-		if (v1 >= 3.0 && v1 < 3.3)
-		{
-			v1 = 3.3;	// promote '3' to 3.3 to avoid falling back to the legacy path.
-			version = "3.3";
-		}
-		if (realglversion < v1) version = glversion;
-		else Printf("Emulating OpenGL v %s\n", version);
-	}
+	// if (version == NULL)
+	// {
+	// 	version = glversion;
+	// }
+	// else
+	// {
+	// 	double v1 = strtod(version, NULL);
+	// 	if (v1 >= 3.0 && v1 < 3.3)
+	// 	{
+	// 		v1 = 3.3;	// promote '3' to 3.3 to avoid falling back to the legacy path.
+	// 		version = "3.3";
+	// 	}
+	// 	if (realglversion < v1) version = glversion;
+	// 	else Printf("Emulating OpenGL v %s\n", version);
+	// }
 
-	float gl_version = (float)strtod(version, NULL) + 0.01f;
+	// float gl_version = (float)strtod(version, NULL) + 0.01f;
 
-	// Don't even start if it's lower than 2.0 or no framebuffers are available (The framebuffer extension is needed for glGenerateMipmapsEXT!)
-	if (gl_version < 3.3f)
-	{
-		I_FatalError("Unsupported OpenGL version.\nAt least OpenGL 3.3 is required to run " GAMENAME ".\n");
-	}
+	// Printf("gl_version: %.1f\n", gl_version);
+	// // Don't even start if it's lower than 2.0 or no framebuffers are available (The framebuffer extension is needed for glGenerateMipmapsEXT!)
+	// if (gl_version < 3.3f)
+	// {
+	// 	I_FatalError("Unsupported OpenGL version.\nAt least OpenGL 3.3 is required to run " GAMENAME ".\n");
+	// }
+	float gl_version = 3.3;
 
 
 	// add 0.01 to account for roundoff errors making the number a tad smaller than the actual version
@@ -159,6 +161,7 @@ void gl_LoadExtensions()
 			gl.flags |= RFL_NO_CLIP_PLANES;	// gl_ClipDistance is horribly broken on ATI GL3 drivers for Windows. (TBD: Relegate to vintage build? Maybe after the next survey.)
 		}
 #endif
+		gl.flags |= RFL_NO_CLIP_PLANES;
 		gl.glslversion = 3.31f;	// Force GLSL down to 3.3.
 	}
 	else if (gl_version < 4.5f)
@@ -212,11 +215,11 @@ void gl_LoadExtensions()
 void gl_PrintStartupLog()
 {
 	int v = 0;
-	glGetIntegerv(GL_CONTEXT_PROFILE_MASK, &v);
+	// glGetIntegerv(GL_CONTEXT_PROFILE_MASK, &v);
 
 	Printf ("GL_VENDOR: %s\n", glGetString(GL_VENDOR));
 	Printf ("GL_RENDERER: %s\n", glGetString(GL_RENDERER));
-	Printf ("GL_VERSION: %s (%s profile)\n", glGetString(GL_VERSION), (v & GL_CONTEXT_CORE_PROFILE_BIT)? "Core" : "Compatibility");
+	Printf ("GL_VERSION: %s (%s profile)\n", glGetString(GL_VERSION), /*(v & GL_CONTEXT_CORE_PROFILE_BIT)? "Core" : "Compatibility"*/ "Core");
 	Printf ("GL_SHADING_LANGUAGE_VERSION: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	Printf (PRINT_LOG, "GL_EXTENSIONS:");
 	for (unsigned i = 0; i < m_Extensions.Size(); i++)
@@ -228,7 +231,8 @@ void gl_PrintStartupLog()
 	Printf("\nMax. texture size: %d\n", v);
 	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &v);
 	Printf ("Max. texture units: %d\n", v);
-	glGetIntegerv(GL_MAX_VARYING_FLOATS, &v);
+	// glGetIntegerv(GL_MAX_VARYING_FLOATS, &v);
+	v = -1;
 	Printf ("Max. varying: %d\n", v);
 	
 	if (gl.flags & RFL_SHADER_STORAGE_BUFFER)

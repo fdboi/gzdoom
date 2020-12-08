@@ -125,9 +125,10 @@ void OpenGLFrameBuffer::InitializeState()
 
 	if (first)
 	{
-		if (ogl_LoadFunctions() == ogl_LOAD_FAILED)
+		int result = ogl_LoadFunctions();
+		if (result <= ogl_LOAD_FAILED)
 		{
-			I_FatalError("Failed to load OpenGL functions.");
+			I_FatalError("Failed to load OpenGL functions. (%d)", result);
 		}
 	}
 
@@ -151,15 +152,15 @@ void OpenGLFrameBuffer::InitializeState()
 	glEnable(GL_DITHER);
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_POLYGON_OFFSET_FILL);
-	glEnable(GL_POLYGON_OFFSET_LINE);
+	// glEnable(GL_POLYGON_OFFSET_LINE);
 	glEnable(GL_BLEND);
-	glEnable(GL_DEPTH_CLAMP);
+	// glEnable(GL_DEPTH_CLAMP);
 	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_LINE_SMOOTH);
+	// glDisable(GL_LINE_SMOOTH);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClearDepth(1.0f);
+	glClearDepthf(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	SetViewportRects(nullptr);

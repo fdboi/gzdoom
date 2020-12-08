@@ -294,15 +294,15 @@ PPGLTexture FGLRenderBuffers::Create2DTexture(const char *name, GLuint format, i
 	switch (format)
 	{
 	case GL_RGBA8:				dataformat = GL_RGBA; datatype = GL_UNSIGNED_BYTE; break;
-	case GL_RGBA16:				dataformat = GL_RGBA; datatype = GL_UNSIGNED_SHORT; break;
+	// case GL_RGBA16:				dataformat = GL_RGBA; datatype = GL_UNSIGNED_SHORT; break;
 	case GL_RGBA16F:			dataformat = GL_RGBA; datatype = GL_FLOAT; break;
 	case GL_RGBA32F:			dataformat = GL_RGBA; datatype = GL_FLOAT; break;
-	case GL_RGBA16_SNORM:		dataformat = GL_RGBA; datatype = GL_SHORT; break;
+	// case GL_RGBA16_SNORM:		dataformat = GL_RGBA; datatype = GL_SHORT; break;
 	case GL_R32F:				dataformat = GL_RED; datatype = GL_FLOAT; break;
 	case GL_R16F:				dataformat = GL_RED; datatype = GL_FLOAT; break;
 	case GL_RG32F:				dataformat = GL_RG; datatype = GL_FLOAT; break;
 	case GL_RG16F:				dataformat = GL_RG; datatype = GL_FLOAT; break;
-	case GL_RGB10_A2:			dataformat = GL_RGBA; datatype = GL_UNSIGNED_INT_10_10_10_2; break;
+	// case GL_RGB10_A2:			dataformat = GL_RGBA; datatype = GL_UNSIGNED_INT_10_10_10_2; break;
 	case GL_DEPTH_COMPONENT24:	dataformat = GL_DEPTH_COMPONENT; datatype = GL_FLOAT; break;
 	case GL_STENCIL_INDEX8:		dataformat = GL_STENCIL_INDEX; datatype = GL_INT; break;
 	case GL_DEPTH24_STENCIL8:	dataformat = GL_DEPTH_STENCIL; datatype = GL_UNSIGNED_INT_24_8; break;
@@ -320,13 +320,13 @@ PPGLTexture FGLRenderBuffers::Create2DTexture(const char *name, GLuint format, i
 PPGLTexture FGLRenderBuffers::Create2DMultisampleTexture(const char *name, GLuint format, int width, int height, int samples, bool fixedSampleLocations)
 {
 	PPGLTexture tex;
-	tex.Width = width;
-	tex.Height = height;
-	glGenTextures(1, &tex.handle);
-	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, tex.handle);
-	FGLDebug::LabelObject(GL_TEXTURE, tex.handle, name);
-	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, fixedSampleLocations);
-	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
+	// tex.Width = width;
+	// tex.Height = height;
+	// glGenTextures(1, &tex.handle);
+	// glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, tex.handle);
+	// FGLDebug::LabelObject(GL_TEXTURE, tex.handle, name);
+	// glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, fixedSampleLocations);
+	// glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 	return tex;
 }
 
@@ -455,8 +455,8 @@ bool FGLRenderBuffers::CheckFrameBufferCompleteness()
 		case GL_FRAMEBUFFER_UNDEFINED: error << "GL_FRAMEBUFFER_UNDEFINED"; break;
 		case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: error << "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"; break;
 		case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: error << "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT"; break;
-		case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: error << "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER"; break;
-		case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: error << "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER"; break;
+		// case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER: error << "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER"; break;
+		// case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER: error << "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER"; break;
 		case GL_FRAMEBUFFER_UNSUPPORTED: error << "GL_FRAMEBUFFER_UNSUPPORTED"; break;
 		case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE: error << "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE"; break;
 		case GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS: error << "GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS"; break;
@@ -477,13 +477,13 @@ void FGLRenderBuffers::ClearFrameBuffer(bool stencil, bool depth)
 {
 	GLboolean scissorEnabled;
 	GLint stencilValue;
-	GLdouble depthValue;
+	GLfloat depthValue;
 	glGetBooleanv(GL_SCISSOR_TEST, &scissorEnabled);
 	glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilValue);
-	glGetDoublev(GL_DEPTH_CLEAR_VALUE, &depthValue);
+	glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthValue);
 	glDisable(GL_SCISSOR_TEST);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glClearDepth(0.0);
+	glClearDepthf(0.0);
 	glClearStencil(0);
 	GLenum flags = GL_COLOR_BUFFER_BIT;
 	if (stencil)
@@ -492,7 +492,7 @@ void FGLRenderBuffers::ClearFrameBuffer(bool stencil, bool depth)
 		flags |= GL_DEPTH_BUFFER_BIT;
 	glClear(flags);
 	glClearStencil(stencilValue);
-	glClearDepth(depthValue);
+	glClearDepthf(depthValue);
 	if (scissorEnabled)
 		glEnable(GL_SCISSOR_TEST);
 }
@@ -806,7 +806,7 @@ PPGLTextureBackend *GLPPRenderState::GetGLTexture(PPTexture *texture)
 		case PixelFormat::Rgba16f: glformat = GL_RGBA16F; break;
 		case PixelFormat::R32f: glformat = GL_R32F; break;
 		case PixelFormat::Rg16f: glformat = GL_RG16F; break;
-		case PixelFormat::Rgba16_snorm: glformat = GL_RGBA16_SNORM; break;
+		// case PixelFormat::Rgba16_snorm: glformat = GL_RGBA16_SNORM; break;
 		}
 
 		if (texture->Data)

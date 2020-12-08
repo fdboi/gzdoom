@@ -123,7 +123,7 @@ void FGLDebug::PushGroup(const FString &name)
 	{
 		GLuint queryHandle = 0;
 		glGenQueries(1, &queryHandle);
-		glBeginQuery(GL_TIME_ELAPSED, queryHandle);
+		glBeginQuery(GL_TIME_ELAPSED_EXT, queryHandle);
 		timeElapsedQueries.push_back({ name, queryHandle });
 	}
 }
@@ -137,7 +137,7 @@ void FGLDebug::PopGroup()
 
 	if (gpuStatActive)
 	{
-		glEndQuery(GL_TIME_ELAPSED);
+		glEndQuery(GL_TIME_ELAPSED_EXT);
 	}
 }
 

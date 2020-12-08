@@ -38,6 +38,7 @@ public:
 
 private:
 
+	int textureSizeInBytes;
 	bool forcenofilter;
 
 	unsigned int glTexID = 0;

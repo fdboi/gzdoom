@@ -33,7 +33,7 @@
 **/
 
 #include <algorithm>
-#include "gl_load.h"
+#include "load_glad.h"
 #include "gl_buffers.h"
 #include "gl_renderstate.h"
 #include "v_video.h"
@@ -88,8 +88,8 @@ void GLBuffer::SetData(size_t size, const void *data, bool staticdata)
 		mPersistent = screen->BuffersArePersistent() && !staticdata;
 		if (mPersistent)
 		{
-			glBufferStorage(mUseType, size, nullptr, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
-			map = glMapBufferRange(mUseType, 0, size, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
+			// glBufferStorage(mUseType, size, nullptr, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
+			// map = glMapBufferRange(mUseType, 0, size, GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT);
 		}
 		else
 		{

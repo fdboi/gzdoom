@@ -209,6 +209,7 @@ void SaveCachedProgramBinary(const FString &vertex, const FString &fragment, con
 
 bool FShader::Load(const char * name, const char * vert_prog_lump, const char * frag_prog_lump, const char * proc_prog_lump, const char * light_fragprog, const char * defines)
 {
+	printf("Loading shader: %s\n", name);
 	static char buffer[10000];
 	FString error;
 
@@ -371,7 +372,7 @@ bool FShader::Load(const char * name, const char * vert_prog_lump, const char * 
 	unsigned int lightbuffersize = screen->mLights->GetBlockSize();
 	if (!lightbuffertype)
 	{
-		vp_comb.Format("#version 330 core\n#define NUM_UBO_LIGHTS %d\n", lightbuffersize);
+		vp_comb.Format("#version 320 es\n#define NUM_UBO_LIGHTS %d\n", lightbuffersize);
 	}
 	else
 	{
@@ -483,6 +484,9 @@ bool FShader::Load(const char * name, const char * vert_prog_lump, const char * 
 		// This will cause some glitches and regressions but is the only way to avoid total display garbage.
 		vp_comb.Substitute("gl_ClipDistance", "//");
 	}
+
+	// printf("Shader Source - - - - - - - -\n%s\n\n-------------------------------------\n\n%s\n\n- - - - - - - - -\n",
+	// 		vp_comb.GetChars(), fp_comb.GetChars());
 
 	hShader = glCreateProgram();
 	FGLDebug::LabelObject(GL_PROGRAM, hShader, name);
