@@ -740,7 +740,9 @@ set( FASTMATH_SOURCES
 	common/textures/hires/hqnx/hq4x.cpp
 	common/textures/hires/xbr/xbrz.cpp
 	common/textures/hires/xbr/xbrz_old.cpp
-	common/rendering/gl_load/gl_load.c
+	# common/rendering/gl_load/gl_load.c
+	common/rendering/gl_load/load_glad.c
+	common/rendering/gl_load/glad.c
 	rendering/hwrenderer/hw_dynlightdata.cpp
 	rendering/hwrenderer/scene/hw_bsp.cpp
 	rendering/hwrenderer/scene/hw_fakeflat.cpp
