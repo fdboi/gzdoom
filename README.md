@@ -74,9 +74,9 @@ and the ZMusic library: `$CMAKE_INSTALL_PREFIX/lib/libzmusic.so*`
 
 You'll also need a Doom WAD. Place all these in the same folder.
 
-Joystick work out of the box. Buttons need to be configured.
+Joysticks work out of the box. Buttons need to be configured.
 
-Then do `LD_LIBRARY_PATH=/usr/lib:/usr/lib/pulseaudio:/storage/sandbox/gzdoom ./gzdoom`
+Then do `LD_LIBRARY_PATH=$LD_LIBRARY_PATH:. ./gzdoom`
 
 Use `-file <file>` to load additional mods. IWADs can be chosen in the prompt on startup or with `-iwad <file>`
 
